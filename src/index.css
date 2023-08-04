@@ -14,29 +14,31 @@ html {
     font-family: "Inter var", sans-serif;
   }
 }
-
+/* Make sure you have the 'xl' breakpoint defined in your Tailwind CSS configuration. */
+@layer components {
 .app {
   @apply relative w-full h-screen overflow-hidden;
 }
-
+/* .xl\:custom-class { */
 .home {
-  @apply w-fit  h-full flex justify-between justify-start items-start flex-col py-8 px-36 sm:p-8 p-6 max-gap-7 absolute z-10;
+  @apply w-auto h-full flex justify-start items-start flex-col py-8 px-36 xl:justify-between xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
 }
+/* } */
 
 .home-content {
-  @apply flex-1  justify-center justify-start flex flex-col gap-10;
+  @apply flex-1 justify-center flex flex-col gap-10;
 }
 
 .head-text {
-  @apply  text-[10rem] text-[6rem] leading-[11rem] leading-[7rem] font-black text-black;
+  @apply text-[10rem] leading-[11rem] font-black text-black;
 }
 
 .download-btn {
-  @apply w-14 h-14 flex justify-center items-center rounded-full glassmorphism cursor-pointer outline-none;
+  @apply w-14 h-14 flex justify-center items-center rounded-full ring ring-0 cursor-pointer;
 }
 
 .editortabs-container {
-  @apply glassmorphism w-16 border-[2px] rounded-lg flex flex-col justify-center items-center ml-1 py-4 gap-4;
+  @apply w-16 border-[2px] rounded-lg flex flex-col justify-center items-center ml-1 py-4 gap-4;
 }
 
 .filtertabs-container {
@@ -56,13 +58,13 @@ html {
 }
 
 .filepicker-label {
-  @apply border border-gray-300 py-1.5 px-2 rounded-md shadow-sm text-xs text-gray-700 focus: outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
+  @apply border border-gray-300 py-1.5 px-2 rounded-md shadow-sm text-xs text-gray-700 ring ring-blue-500 cursor-pointer w-auto;
 }
 
 .tab-btn {
   @apply w-14 h-14 flex justify-center items-center cursor-pointer select-none;
 }
-
+}
 .glassmorphism {
   background: rgba(255, 255, 255, 0.25);
   box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
