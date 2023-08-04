@@ -22,6 +22,7 @@ html {
 /* .xl\:custom-class { */
 .home {
   @apply w-auto h-full flex justify-start items-start flex-col py-8 px-36 xl:justify-between xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
+  /* @apply w-auto h-full flex justify-start items-start flex-col py-8  xl:justify-between xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10; */
 }
 /* } */
 
