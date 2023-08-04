@@ -1,8 +1,8 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
+
 import config from "../config/config";
 import state from "../store";
 import { download } from "../assets";
@@ -21,15 +21,17 @@ const Customizer = () => {
   const snap = useSnapshot(state);
 
   const [file, setFile] = useState("");
+
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
+
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
   });
 
-  // show tab content depanding on active tab
+  // show tab content depending on the activeTab
   const generateTabContent = () => {
     switch (activeEditorTab) {
       case "colorpicker":
@@ -49,10 +51,26 @@ const Customizer = () => {
         return null;
     }
   };
+
   const handleSubmit = async (type) => {
-    if (!prompt) return "Please enter a Prompt";
+    if (!prompt) return alert("Please enter a prompt");
+
     try {
-      // call out backend to generate an ai image
+      setGeneratingImg(true);
+
+      const response = await fetch("http://localhost:8080/api/v1/dalle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
+
+      const data = await response.json();
+
+      handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (error) {
       alert(error);
     } finally {
@@ -65,6 +83,7 @@ const Customizer = () => {
     const decalType = DecalTypes[type];
 
     state[decalType.stateProperty] = result;
+
     if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
     }
@@ -79,11 +98,12 @@ const Customizer = () => {
         state.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
-        state.isFullTexture = true;
-        state.isLogoTexture = false;
+        state.isLogoTexture = true;
+        state.isFullTexture = false;
+        break;
     }
 
-    // after setting the state , activefilterTab is updated
+    // after setting the state, activeFilterTab is updated
 
     setActiveFilterTab((prevState) => {
       return {
@@ -109,7 +129,7 @@ const Customizer = () => {
             className='absolute top-0 left-0 z-10'
             {...slideAnimation("left")}
           >
-            <div className='flex items-center min-h-screen '>
+            <div className='flex items-center min-h-screen'>
               <div className='editortabs-container tabs'>
                 {EditorTabs.map((tab) => (
                   <Tab
@@ -118,6 +138,7 @@ const Customizer = () => {
                     handleClick={() => setActiveEditorTab(tab.name)}
                   />
                 ))}
+
                 {generateTabContent()}
               </div>
             </div>
@@ -129,7 +150,7 @@ const Customizer = () => {
           >
             <CustomButton
               type='filled'
-              title='GO Back'
+              title='Go Back'
               handleClick={() => (state.intro = true)}
               customStyles='w-fit px-4 py-2.5 font-bold text-sm'
             />
