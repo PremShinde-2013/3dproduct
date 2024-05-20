@@ -1,4 +1,4 @@
-# 3D Product Customization App Readme
+# 3D Product Customization
 
 Welcome to the 3D Product Customization App! This app allows users to interact with 3D models, change logo textures, modify t-shirt colors, and even generate logos using AI. It's built using React, Tailwind CSS, and Three.js to create an immersive and stylish experience.
 
